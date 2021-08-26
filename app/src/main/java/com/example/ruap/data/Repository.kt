@@ -25,17 +25,17 @@ class Repository(private val newsApi: NewsApi, private val azureApi: AzureApi) {
         }
     }
 
-    suspend fun fetchCategorizedNews(): Flow<MutableList<Article>> = flow {
-        try {
-            val response = azureApi.fetchCategorizedNews()
-            if(response.status != "ok"){
-                Log.d(TAG,response.status)
-            }
-            Log.d(TAG,response.totalResults.toString())
-            Log.d(TAG,response.articles.toString())
-            emit(response.articles)
-        } catch (e: Exception) {
-            Log.e(TAG, e.message.toString())
-        }
-    }
+//    suspend fun fetchCategorizedNews(): Flow<MutableList<Article>> = flow {
+//        try {
+//            val response = azureApi.fetchCategorizedNews()
+//            if(response.status != "ok"){
+//                Log.d(TAG,response.status)
+//            }
+//            Log.d(TAG,response.totalResults.toString())
+//            Log.d(TAG,response.articles.toString())
+//            emit(response.articles)
+//        } catch (e: Exception) {
+//            Log.e(TAG, e.message.toString())
+//        }
+//    }
 }

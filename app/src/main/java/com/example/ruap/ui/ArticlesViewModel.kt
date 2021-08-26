@@ -61,10 +61,10 @@ class ArticlesViewModel(/*private val repository: Repository*/) : ViewModel(){
 
     fun fetchCategorizedNews(){
         viewModelScope.launch {
-            repository.fetchCategorizedNews().collect{
-                Log.d(TAG,it.toString())
-                _categorizedNewsFetched.postValue(it)
-            }
+//            repository.fetchCategorizedNews().collect{
+//                Log.d(TAG,it.toString())
+//                _categorizedNewsFetched.postValue(it)
+//            }
         }
     }
 

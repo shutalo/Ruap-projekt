@@ -1,32 +1,50 @@
 package com.example.ruap.ui.adapters
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ruap.R
+import com.example.ruap.data.Article
 
-class CategoryRecyclerViewAdapter : RecyclerView.Adapter<CategoryRecyclerViewAdapter.CategoryViewHolder>() {
+class CategoryRecyclerViewAdapter(private val listener: CategoryRecyclerViewAdapter.OnItemClickListener, private var categories: MutableList<String>) : RecyclerView.Adapter<CategoryRecyclerViewAdapter.CategoryViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        TODO("Not yet implemented")
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.category_item, parent, false)
+        return CategoryViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.bind(categories[position])
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return categories.size
     }
 
-    class CategoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class CategoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener{
+        private val categoryTv: TextView = itemView.findViewById<TextView>(R.id.category)
 
-//        fun bind(player: User, position: Int){
-//            itemView.player_name.text = player.username.toString()
-//            itemView.player_high_score.text = player.highScore.toString()
-//            itemView.position.text = (position + 4).toString()
-//        }
+        fun bind(category: String){
+            categoryTv.text = category
+        }
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION)
+                listener.onItemClick(position)
+        }
     }
 
     fun refreshData(){
 
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
     }
 }

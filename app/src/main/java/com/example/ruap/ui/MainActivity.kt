@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         val articles: MutableList<Article> = mutableListOf()
 
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity(){
             args.putSerializable("article$index",articles[index])
         }
         articleListFragment.arguments = args
+
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container,articleListFragment).commit()
     }
 }

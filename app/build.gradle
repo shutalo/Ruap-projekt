@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
+apply plugin: 'org.jetbrains.kotlin.android.extensions'
+apply plugin: 'com.android.application'
 
 
 android {

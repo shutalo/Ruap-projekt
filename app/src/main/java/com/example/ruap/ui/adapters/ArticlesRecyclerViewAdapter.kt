@@ -7,10 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ruap.R
 import com.example.ruap.data.Article
+import kotlinx.android.synthetic.main.article_item  .view.*
 
-class ArticlesRecyclerViewAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<ArticlesRecyclerViewAdapter.ArticleViewHolder>() {
+class ArticlesRecyclerViewAdapter(private val listener: OnArticleClickListener, private var articles: MutableList<Article>) : RecyclerView.Adapter<ArticlesRecyclerViewAdapter.ArticleViewHolder>() {
 
-    private var articles: MutableList<Article> = mutableListOf()
+//    private var articles: MutableList<Article> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.article_item, parent, false)
@@ -42,7 +43,7 @@ class ArticlesRecyclerViewAdapter(private val listener: OnItemClickListener) : R
         override fun onClick(v: View?) {
             val position = adapterPosition
             if(position != RecyclerView.NO_POSITION)
-                listener.onItemClick(position)
+                listener.onArticleClicked(position)
         }
 
     }
@@ -53,7 +54,7 @@ class ArticlesRecyclerViewAdapter(private val listener: OnItemClickListener) : R
     }
 
 
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
+    interface OnArticleClickListener {
+        fun onArticleClicked(position: Int)
     }
 }

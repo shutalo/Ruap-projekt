@@ -27,14 +27,14 @@ class SplashActivity : AppCompatActivity() {
         articlesViewModel.newsFetched.observe(this){
             if(it != null){
                 //tu bi trebo obradit te dohvacene clanke i poslat kroz fetchCategorized request na azure s tim podacima
-                articlesViewModel.fetchCategorizedNews()
-//                val intent: Intent = Intent(this,MainActivity::class.java)
-//                intent.putExtra("size",it.size)
-//                for(index in it.indices){
-//                    intent.putExtra("article$index",it[index])
-//                }
-//                Log.d(TAG,it.toString())
-//                startActivity(intent)
+//                articlesViewModel.fetchCategorizedNews()
+                val intent: Intent = Intent(this,MainActivity::class.java)
+                intent.putExtra("size",it.size)
+                for(index in it.indices){
+                    intent.putExtra("article$index",it[index])
+                }
+                Log.d(TAG,it.toString())
+                startActivity(intent)
             }
         }
 
