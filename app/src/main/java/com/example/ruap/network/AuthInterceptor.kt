@@ -15,7 +15,7 @@ class AuthInterceptor : Interceptor {
         try{
             if(req.url.toString().contains("azureml") ){
                 Log.d(TAG,"authentication in progress")
-                req = req.newBuilder().addHeader("Authorization","Bearer f/tvntQ5wvTY67zC3rTcFyU6OKP0j0SSeVw2S9nxIbctTC1HliTujsEzbgAkg/LvjuXLhZVq0J/kaWnbXUbaqg==").build()
+                req = req.newBuilder().addHeader("Authorization","Bearer yG1dE9wD/UuzxVR//P4VGMQwGK2iSBB0NR4znUBjoV3MNNhbrLfLjBMHutJ6XwAFpp40WaLVKwpYnBgokQ++0Q==").build()
             }
             // DONT INCLUDE API KEYS IN YOUR SOURCE CODE
             val url = req.url.newBuilder().build()
