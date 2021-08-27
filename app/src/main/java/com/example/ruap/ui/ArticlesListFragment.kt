@@ -25,7 +25,7 @@ class ArticlesListFragment : Fragment(), ArticlesRecyclerViewAdapter.OnArticleCl
     private lateinit var binding: FragmentArticlesListBinding
     private val articlesViewModel = ArticlesViewModel()
 //    private val viewModel by sharedViewModel<ArticlesViewModel>()
-    private val categories = mutableListOf<String>("Entertainment","Politics","Crime","Sport","Business","Tech","Money","Science","Media")
+    private val categories = mutableListOf<String>("Entertainment","Politics","Crime","Sport","Business","Tech","Money","Science")
     private var articles = mutableListOf<Article>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
