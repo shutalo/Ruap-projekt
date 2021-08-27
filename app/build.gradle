@@ -54,7 +54,7 @@ dependencies {
 
 
     //koin
-    def koin_version = '3.0.1'
+    def koin_version = '3.1.2'
     implementation "io.insert-koin:koin-android:$koin_version"
 
     //coroutines

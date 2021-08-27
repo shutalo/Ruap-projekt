@@ -9,9 +9,10 @@ import com.example.ruap.R
 import com.example.ruap.data.Article
 import kotlinx.android.synthetic.main.article_item  .view.*
 
-class ArticlesRecyclerViewAdapter(private val listener: OnArticleClickListener, private var articles: MutableList<Article>) : RecyclerView.Adapter<ArticlesRecyclerViewAdapter.ArticleViewHolder>() {
+class ArticlesRecyclerViewAdapter(private val listener: OnArticleClickListener) : RecyclerView.Adapter<ArticlesRecyclerViewAdapter.ArticleViewHolder>() {
 
-//    private var articles: MutableList<Article> = mutableListOf()
+    private var articles: MutableList<Article> = mutableListOf()
+    private var category: String = "entertainment"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.article_item, parent, false)
@@ -19,11 +20,17 @@ class ArticlesRecyclerViewAdapter(private val listener: OnArticleClickListener, 
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        holder.bind(articles[position])
+        if(articles[position].category == category)
+            holder.bind(articles[position])
     }
 
     override fun getItemCount(): Int {
-        return articles.size
+        var count: Int = 0
+        for (article in articles) {
+            if(article.category == category)
+                count++
+        }
+        return count
     }
 
     inner class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),View.OnClickListener {
@@ -34,6 +41,8 @@ class ArticlesRecyclerViewAdapter(private val listener: OnArticleClickListener, 
         fun bind(article: Article){
             articleTitle.text = article.title
             articleContent.text = article.description
+            if(article.description == null || article.description == "")
+                articleContent.text = article.content
         }
 
         init {
@@ -48,11 +57,16 @@ class ArticlesRecyclerViewAdapter(private val listener: OnArticleClickListener, 
 
     }
 
+    fun refreshData(articles: MutableList<Article>,category: String){
+        this.articles = articles
+        this.category = category
+        notifyDataSetChanged()
+    }
+
     fun refreshData(articles: MutableList<Article>){
         this.articles = articles
         notifyDataSetChanged()
     }
-
 
     interface OnArticleClickListener {
         fun onArticleClicked(position: Int)

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.ruap.data.Repository
 import androidx.lifecycle.viewModelScope
 import com.example.ruap.data.Article
+import com.example.ruap.data.processed.request.Request
 import com.example.ruap.network.AuthInterceptor
 import com.example.ruap.network.AzureApi
 import com.example.ruap.network.NewsApi
@@ -23,8 +24,8 @@ class ArticlesViewModel(/*private val repository: Repository*/) : ViewModel(){
 
     private var _newsFetched: MutableLiveData<MutableList<Article>?> = MutableLiveData(null)
     var newsFetched: LiveData<MutableList<Article>?> = _newsFetched
-    private var _categorizedNewsFetched: MutableLiveData<MutableList<Article>?> = MutableLiveData(null)
-    var categorizedNewsFetched: LiveData<MutableList<Article>?> = _categorizedNewsFetched
+    private var _categorizedNewsFetched: MutableLiveData<List<List<String>>> = MutableLiveData(null)
+    var categorizedNewsFetched: LiveData<List<List<String>>> = _categorizedNewsFetched
 
     private lateinit var repository: Repository
 
@@ -43,7 +44,7 @@ class ArticlesViewModel(/*private val repository: Repository*/) : ViewModel(){
             OkHttpClient().newBuilder().addInterceptor(AuthInterceptor()).addInterceptor(logging).build())
             .addConverterFactory(GsonConverterFactory.create()).build()
 
-        val azureApi = retrofit1.create(AzureApi::class.java)
+        val azureApi = retrofit2.create(AzureApi::class.java)
 
 
         repository = Repository(newsApi,azureApi)
@@ -59,12 +60,12 @@ class ArticlesViewModel(/*private val repository: Repository*/) : ViewModel(){
         }
     }
 
-    fun fetchCategorizedNews(){
+    fun fetchCategorizedNews(request: Request){
         viewModelScope.launch {
-//            repository.fetchCategorizedNews().collect{
-//                Log.d(TAG,it.toString())
-//                _categorizedNewsFetched.postValue(it)
-//            }
+            repository.fetchCategorizedNews(request).collect{
+                Log.d(TAG,it.toString())
+                _categorizedNewsFetched.postValue(it)
+            }
         }
     }
 

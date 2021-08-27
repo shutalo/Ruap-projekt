@@ -18,7 +18,6 @@
         android:textSize="24sp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:text="Luka"
         />
 
     <TextView
@@ -36,7 +35,6 @@
         android:ellipsize="end"
         android:textSize="17sp"
         android:textColor="@color/black"
-        android:text="Ovo je tekst"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

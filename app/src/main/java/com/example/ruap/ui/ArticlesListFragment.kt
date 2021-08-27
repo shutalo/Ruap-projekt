@@ -13,18 +13,19 @@ import com.example.ruap.databinding.FragmentArticleBinding
 import com.example.ruap.databinding.FragmentArticlesListBinding
 import com.example.ruap.ui.adapters.ArticlesRecyclerViewAdapter
 import com.example.ruap.ui.adapters.CategoryRecyclerViewAdapter
-import org.koin.android.ext.android.bind
+//import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
-class ArticlesListFragment : Fragment(), ArticlesRecyclerViewAdapter.OnArticleClickListener, CategoryRecyclerViewAdapter.OnItemClickListener {
+class ArticlesListFragment : Fragment(), ArticlesRecyclerViewAdapter.OnArticleClickListener, CategoryRecyclerViewAdapter.OnCategoryClickListener {
 
     private val TAG = "ArticlesListFragment"
 
     private lateinit var binding: FragmentArticlesListBinding
     private val articlesViewModel = ArticlesViewModel()
 //    private val viewModel by sharedViewModel<ArticlesViewModel>()
-    private val categories = mutableListOf<String>("Entertainment","Politics","Travel","World News","Media","Crime","Comedy","Latino Voices","Queer Voices","Religion","Sports","Impact","Business","Tech","Black Voices")
+    private val categories = mutableListOf<String>("Entertainment","Politics","Crime","Sport","Business","Tech","Money","Science","Media")
     private var articles = mutableListOf<Article>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,27 +43,31 @@ class ArticlesListFragment : Fragment(), ArticlesRecyclerViewAdapter.OnArticleCl
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         setUpUi()
-
-//        viewModel.categorizedNewsFetched.observe(viewLifecycleOwner){
-//            (binding.articlesRv.adapter as ArticlesRecyclerViewAdapter).refreshData(it)
-//        }
     }
 
-    override fun onItemClick(position: Int) {
-
+    override fun onCategoryClick(position: Int) {
+        val newArticles = mutableListOf<Article>()
+        articles.forEach {
+            if(categories[position].lowercase(Locale.getDefault()) == it.category){
+                newArticles.add(it)
+            }
+        }
+        (binding.articlesRv.adapter as ArticlesRecyclerViewAdapter).refreshData(newArticles,categories[position].lowercase(Locale.getDefault()))
     }
 
-    override fun onResume() {
-        super.onResume()
-//        (binding.articlesRv.adapter as ArticlesRecyclerViewAdapter).refreshData(articles)
-    }
 
     private fun setUpUi(){
         binding.articlesRv.layoutManager = LinearLayoutManager(requireContext())
-        binding.articlesRv.adapter = ArticlesRecyclerViewAdapter(this,articles)
+        binding.articlesRv.adapter = ArticlesRecyclerViewAdapter(this)
         binding.articlesRv.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
+        val newArticles = mutableListOf<Article>()
+        articles.forEach {
+            if(it.category == "entertainment"){
+                newArticles.add(it)
+            }
+        }
+        (binding.articlesRv.adapter as ArticlesRecyclerViewAdapter).refreshData(newArticles)
         binding.categoriesRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
         binding.categoriesRv.adapter = CategoryRecyclerViewAdapter(this,categories)
         binding.categoriesRv.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.HORIZONTAL))
@@ -71,8 +76,6 @@ class ArticlesListFragment : Fragment(), ArticlesRecyclerViewAdapter.OnArticleCl
     override fun onArticleClicked(position: Int) {
         val args = Bundle()
         val f = ArticleFragment()
-//        args.putString("title", viewModel.categorizedNewsFetched.value?.get(position)?.title)
-//        args.putString("content", viewModel.categorizedNewsFetched.value?.get(position)?.content)
         args.putString("title", articles[position].title)
         args.putString("content", articles[position].content)
         f.arguments = args

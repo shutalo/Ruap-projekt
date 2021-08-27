@@ -11,4 +11,6 @@
     <color name="green">#FF00FF00</color>
     <color name="grey">#FF8d8d8d</color>
     <color name="light_grey">#FF9a9a9a</color>
+    <color name="category_highlight">#FFF3DCCE</color>
+    <color name="category">#FFD3DCCE</color>
 </resources>

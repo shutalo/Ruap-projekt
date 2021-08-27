@@ -1,33 +1,34 @@
 package com.example.ruap.di
-
-import com.example.ruap.data.Repository
-import com.example.ruap.network.AuthInterceptor
-import com.example.ruap.network.AzureApi
-import com.example.ruap.network.NewsApi
-import com.example.ruap.ui.ArticlesViewModel
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-
-
+//
+//import com.example.ruap.data.Repository
+//import com.example.ruap.network.AuthInterceptor
+//import com.example.ruap.network.AzureApi
+//import com.example.ruap.network.NewsApi
+//import com.example.ruap.ui.ArticlesViewModel
+//import okhttp3.OkHttpClient
+//import okhttp3.logging.HttpLoggingInterceptor
+//import org.koin.androidx.viewmodel.dsl.viewModel
+//import org.koin.dsl.module
+//import retrofit2.Retrofit
+//import retrofit2.converter.gson.GsonConverterFactory
+//
+//
 //val appModules = module {
-//    single<Repository> { Repository(get(),get()) }
+//    single<Repository> { Repository(newsApi = get(),azureApi = get()) }
 //}
 //
 //val viewModelModules = module{
-//    viewModel<ArticlesViewModel> { ArticlesViewModel(get()) }
+//    viewModel<ArticlesViewModel> { ArticlesViewModel() }
 //}
 //
 //val networkModule = module {
 //    factory { AuthInterceptor() }
-//    factory { provideOkHttpClient(get()) }
-//    single { provideRetrofitForNewsApi(get()) }
-//    single { provideNetworkForNewsApi(get()) }
-//    single { provideRetrofitForAzureApi(get()) }
-//    single { provideNetworkForAzureApi(provideRetrofitForAzureApi(get())) }
+//    factory { provideOkHttpClient(authInterceptor = get(), loggingInterceptor = get()) }
+//    single { provideRetrofitForNewsApi(okHttpClient = get()) }
+//    single { provideNetworkForNewsApi(retrofit = get()) }
+//    single { provideRetrofitForAzureApi(okHttpClient = get()) }
+//    single { provideNetworkForAzureApi(retrofit = get()) }
+//    single { provideLoggingInterceptor() }
 //}
 //
 //
@@ -41,13 +42,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 //        .addConverterFactory(GsonConverterFactory.create()).build()
 //}
 //
-//fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
-//    val logging: HttpLoggingInterceptor = HttpLoggingInterceptor()
-//    logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-//    return OkHttpClient().newBuilder().addInterceptor(authInterceptor).addInterceptor(logging).build()
+//fun provideOkHttpClient(authInterceptor: AuthInterceptor, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+//    return OkHttpClient().newBuilder().addInterceptor(authInterceptor).addInterceptor(loggingInterceptor).build()
 //}
 //
 //fun provideNetworkForNewsApi(retrofit: Retrofit): NewsApi = retrofit.create(NewsApi::class.java)
 //
 //fun provideNetworkForAzureApi(retrofit: Retrofit): AzureApi = retrofit.create(AzureApi::class.java)
-
+//
+//fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+//    val logger = HttpLoggingInterceptor()
+//    logger.level = HttpLoggingInterceptor.Level.BODY
+//    return logger
+//}
